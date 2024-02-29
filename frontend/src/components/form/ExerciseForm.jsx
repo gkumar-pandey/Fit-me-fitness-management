@@ -2,28 +2,37 @@ import { Form, Formik } from "formik";
 import React from "react";
 import Input from "../Input/Input";
 import Button from "../button/Button";
+import { useDispatch } from "react-redux";
+import { createExercise } from "../../store/features/exerciseSlice";
 
-const ExerciseForm = ({onClose}) => {
+const ExerciseForm = ({ onClose }) => {
   const exerciseFormData = {
     name: "",
     duration: 0,
-    caloriesBurned: 0,
+    calories_burned: 0,
+  };
+  const dispatch = useDispatch();
+  const submitBtnHandler = (data) => {
+    dispatch(createExercise(data));
+    onClose();
   };
   return (
     <div>
       <Formik
         initialValues={exerciseFormData}
         onSubmit={(values, actions) => {
-          console.log(values);
+          submitBtnHandler(values);
+          actions.resetForm(exerciseFormData);
         }}
       >
-        {({ handleSubmit, errors, values }) => (
-          <Form>
+        {({ handleSubmit, handleChange, errors, values }) => (
+          <Form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name">Name</label>
               <Input
                 id={"name"}
                 type={"text"}
+                onChange={handleChange}
                 name={"name"}
                 value={values.name}
                 placeholder={"Exercise Name"}
@@ -32,10 +41,11 @@ const ExerciseForm = ({onClose}) => {
             <div>
               <label htmlFor="caloriesBurned">Calories Burned</label>
               <Input
-                id={"caloriesBurned"}
+                id={"calories_burned"}
                 type={"number"}
-                name={"caloriesBurned"}
-                value={values.caloriesBurned}
+                onChange={handleChange}
+                name={"calories_burned"}
+                value={values.calories_burned}
                 placeholder={"Calories Burned"}
               />
             </div>
@@ -43,6 +53,7 @@ const ExerciseForm = ({onClose}) => {
               <label htmlFor="duration">Duration</label>
               <Input
                 id={"duration"}
+                onChange={handleChange}
                 type={"number"}
                 name={"duration"}
                 value={values.duration}
@@ -50,8 +61,12 @@ const ExerciseForm = ({onClose}) => {
               />
             </div>
             <div className="flex flex-row items-center justify-end py-4 my-2">
-              <Button onClick={onClose} type={'button'} variant={"outline"}>Close</Button>
-              <Button type={'submit'} variant={"solid"}>Submit</Button>
+              <Button onClick={onClose} type={"button"} variant={"outline"}>
+                Close
+              </Button>
+              <Button type={"submit"} variant={"solid"}>
+                Submit
+              </Button>
             </div>
           </Form>
         )}

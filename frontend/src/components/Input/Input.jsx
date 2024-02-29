@@ -9,7 +9,7 @@ const Input = ({ placeholder, type, onChange, name, id, value }) => {
       type={type}
       placeholder={placeholder}
       value={value}
-      className="w-full p-2 mt-1 border rounded-md"
+      className="w-full p-2 my-2 text-white bg-[var(--primary-bg-color)] border border-gray-700 rounded-md"
     />
   );
 };

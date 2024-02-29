@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Button,
@@ -9,17 +9,25 @@ import {
   ExerciseForm,
 } from "../../components";
 import { IoMdAdd } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchExercises } from "../../store/features/exerciseSlice";
+import Loader from "../../components/loader/Loader";
 
 const Exercise = () => {
   const [isFormModalOpen, setFormModalOpen] = useState(false);
+  const dispatch = useDispatch();
   const { exercises, isLoading, error } = useSelector(
     (state) => state.exercise
   );
-  const exerciseData = [{ name: "Pilates", duration: 60, caloriesBurned: 400 }];
+
   const handleFormModal = () => {
     setFormModalOpen(!isFormModalOpen);
   };
+  useEffect(() => {
+    if (exercises.length === 0) {
+      dispatch(fetchExercises());
+    }
+  }, []);
   return (
     <>
       <Container>
@@ -33,18 +41,22 @@ const Exercise = () => {
             Add Exercise
           </Button>
         </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="grid grid-cols-4 gap-4">
+            {exercises.map((ele, idx) => (
+              <ExerciseCard {...ele} key={idx} />
+            ))}
+          </div>
+        )}
 
-        <div className="grid grid-cols-4 gap-4 border">
-          {exerciseData.map((ele, idx) => (
-            <ExerciseCard {...ele} key={idx} />
-          ))}
-        </div>
         <Modal
           title={"Add Exercise"}
           onClose={handleFormModal}
           isOpen={isFormModalOpen}
         >
-          <ExerciseForm />
+          <ExerciseForm onClose={handleFormModal} />
         </Modal>
       </Container>
     </>

@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <Router>
-        <div className="hidden h-screen font-bold xl:flex App">
+        <div className="h-screen font-bold xl:flex App">
           <NavBar />
-          <div className="w-[85%] bg-[#dcf8f5] text-black h-screen overflow-auto">
+          <div className="w-[85%] bg-[var(--primary-bg-color)] text-white h-screen overflow-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/exercise" element={<Exercise />} />

@@ -9,6 +9,9 @@ import Container from "./container/Container";
 import Modal from "./modal/Modal";
 import TargetForm from './form/TargetForm';
 import TargetCard from './card/TargetCard';
+import FoodCard from './card/FoodCard';
+import FoodForm from './form/FoodForm';
+import Loader from './loader/Loader';
 export {
   NavBar,
   Card,
@@ -20,5 +23,8 @@ export {
   Container,
   Modal,
   TargetForm,
-  TargetCard
+  TargetCard,
+  FoodCard,
+  FoodForm,
+  Loader
 };

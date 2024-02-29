@@ -17,23 +17,27 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="bg-[#FFFFFF] text-slate-600 h-screen lg:w-[15%] p-8 py-4 flex flex-col gap-4 font-[sintony]">
+    <nav className="bg-[var(--primary-bg-color)] text-white h-screen lg:w-[15%] p-8 py-4 flex flex-col gap-4 shadow-xl border-r-[1px] border-slate-700 ">
       <div className="flex items-center justify-center gap-2 my-4 text-2xl font-bold">
         <img src={logoImg} alt="Logo" className="w-10 h-10" />
-        <p className="tracking-wider text-black">Fitme</p>
+        <p className="text-4xl font-bold text-white">Fitme</p>
       </div>
-      {navlinks.map(({ link, text, icon }, idx) => (
-        <Link
-          key={idx}
-          className={`flex gap-3 items-center cursor-pointer text-lg font-bold mt-8 px-8 py-4 rounded-full ${
-            pathname === link ? "bg-[#dcf8f5]" : "hover:bg-[#F3FBFA]"
-          }`}
-          to={link}
-        >
-          {icon}
-          {text}
-        </Link>
-      ))}
+      <div className="flex flex-col gap-2">
+        {navlinks.map(({ link, text, icon }, idx) => (
+          <Link key={idx} to={link}>
+            <button
+              className={`flex w-full gap-1 items-center cursor-pointer py-2 px-3 rounded-lg ${
+                pathname === link
+                  ? " bg-gradient-to-r from-[var(--purple)] to-[var(--pink)]"
+                  : "hover:bg-[var(--purple)]"
+              }`}
+            >
+              {icon}
+              {text}
+            </button>
+          </Link>
+        ))}
+      </div>
     </nav>
   );
 };
